@@ -1,0 +1,18 @@
+# Web framework
+Flask>=3.1,<4
+# Reads settings and secrets from the .env file
+python-dotenv>=1.0
+# Time zone database. Windows has none built in, and Python's zoneinfo needs it
+# to understand "America/New_York".
+tzdata>=2025.1
+# Official Anthropic SDK for the AI features (quick add, posting extraction)
+anthropic>=2.6
+# Runs the reminder checks in the background every 15 minutes
+APScheduler>=3.11,<4
+# Read the text out of uploaded resumes and cover letters
+pypdf>=7.0
+python-docx>=1.2
+# Production web server used on the Mac mini (serve.py)
+waitress>=3.0
+# Trusted certificates for https downloads (Discover, Canvas); python.org Python on a Mac has none
+certifi>=2024.2

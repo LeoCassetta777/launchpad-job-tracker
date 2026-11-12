@@ -1,0 +1,405 @@
+{% extends "base.html" %}
+{% block title %}Guide{% endblock %}
+{% block content %}
+<article class="guide">
+<div class="page-head">
+  <h1>📖 The Launchpad guide</h1>
+  <p class="page-sub">Everything Launchpad does, where to find it, and how it works underneath.</p>
+</div>
+
+<nav class="card guide-toc" aria-label="Contents">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#daily">A good daily loop</a></li>
+    <li><a href="#capture">Getting things in: quick add, Talk, clipper</a></li>
+    <li><a href="#agent">Ask Launchpad (the agent)</a></li>
+    <li><a href="#pipeline">Pipeline and cards</a></li>
+    <li><a href="#drawer">The card drawer</a></li>
+    <li><a href="#week">This Week</a></li>
+    <li><a href="#contacts">Contacts</a></li>
+    <li><a href="#apply">Applying: documents, fit check, tailored resumes</a></li>
+    <li><a href="#prep">Interview prep and the question bank</a></li>
+    <li><a href="#rejections">Rejection log</a></li>
+    <li><a href="#discover">Discover (postings found for you) and School (Canvas)</a></li>
+    <li><a href="#focus">Focus tools: Top 3, “I have __ minutes”, timer, Eisenhower, shutdown</a></li>
+    <li><a href="#motivation">Goals, streak, points, levels</a></li>
+    <li><a href="#stats">Stats</a></li>
+    <li><a href="#coach">Weekly review and coach</a></li>
+    <li><a href="#reminders">Reminders: email, push, bell, calendar</a></li>
+    <li><a href="#ai">AI: what it does, what it costs, how it's kept safe</a></li>
+    <li><a href="#settings">Settings, themes, demo data</a></li>
+    <li><a href="#phone">Phone, app install, and login</a></li>
+    <li><a href="#behind">Behind the scenes: where it runs</a></li>
+    <li><a href="#help">Troubleshooting</a></li>
+  </ol>
+</nav>
+
+<section class="card guide-section" id="daily">
+  <h2>1. A good daily loop</h2>
+  <ol>
+    <li><strong>Morning (8:00 AM email):</strong> read the digest. Open Launchpad and <strong>📌 pin</strong> your Top 3 for the day.</li>
+    <li><strong>During the day:</strong> brain dump into the box at the top, or tap the big <strong>🎤</strong> when you're out. Clip postings as you find them.</li>
+    <li><strong>When you have a gap:</strong> tap <strong>⏱ I have __ minutes</strong>, pick the top suggestion, and press ▶ Start.</li>
+    <li><strong>After any email, call, or coffee:</strong> log it on the contact's page and set the next follow-up date.</li>
+    <li><strong>End of day:</strong> <strong>🌙 Shutdown</strong>: move or drop leftover tasks and log one win.</li>
+    <li><strong>Friday 4 PM:</strong> read the coach's review, add your notes. <strong>Sunday 6 PM:</strong> plan next week on This Week.</li>
+  </ol>
+</section>
+
+<section class="card guide-section" id="capture">
+  <h2>2. Getting things in</h2>
+  <h3>The quick-add box (top of every page)</h3>
+  <ul>
+    <li><strong>Ctrl+K</strong> jumps to it from anywhere; <strong>Ctrl+Enter</strong> sends it.</li>
+    <li><strong>🧠 Brain dump:</strong> type anything, e.g. “apply to the X fellowship by Nov 15, finish the 2 courses first, email my Paychex contact next Tuesday, finance homework Thursday ~2 hrs”. The AI turns it into cards: new opportunities, tasks, contacts, logged interactions, and <em>updates to things you already have</em>. It knows today's date, a 4-week calendar, and your existing cards and contacts, so “next Tuesday” and “my Paychex contact” land correctly.</li>
+    <li><strong>📋 Paste a posting:</strong> paste a whole job posting (menus and footers are fine) plus its URL. You get one card with company, role, location, pay, deadline, a 2-sentence summary, and key requirements. The full posting is saved for fit checks and tailoring.</li>
+    <li><strong>🎤 Talk</strong> (pill next to the modes): dictate into the box instead of typing.</li>
+  </ul>
+  <h3>The review pop-up</h3>
+  <ul>
+    <li><strong>Nothing is saved until you accept it.</strong> Every card can be edited first.</li>
+    <li><strong>🤔 guessed</strong> marks anything the AI assumed (like the date it worked out from “next Tuesday”). Check those.</li>
+    <li><strong>⚠️</strong> lines are values the server rejected (a bad email, a date in the past) or links it couldn't match.</li>
+    <li><strong>Couldn't place</strong> lists anything the AI couldn't map, including text that looked like instructions aimed at AI.</li>
+    <li>Accept, Discard, or <strong>Accept all</strong>. If a task belongs to a new opportunity, accepting the task saves the opportunity first.</li>
+    <li>The footer shows what that sort cost (usually about $0.001) and this month's total.</li>
+  </ul>
+  <h3>🎤 The Talk screen (built for your phone)</h3>
+  <ul>
+    <li>Open it with the <strong>big round 🎤 button</strong> in the bottom corner of every page, or long-press the installed app's icon (Android) and pick <strong>Talk</strong>.</li>
+    <li>Tap the giant mic, talk, tap again to stop. Fix any words in the box, then <strong>✨ Sort it out</strong>: you get the same review pop-up as above.</li>
+    <li>It keeps listening through pauses (up to a few minutes). What you said is kept on the device until you accept the cards, so closing the app won't lose it.</li>
+    <li>If your browser can't do speech recognition, the button becomes <strong>⌨️ Tap to type</strong>: use your keyboard's mic key instead (it works everywhere).</li>
+    <li>Privacy: your browser's own speech service (Apple, Google, or Microsoft) turns audio into text; Launchpad only gets the text.</li>
+  </ul>
+  <h3>📎 The clipper (optional)</h3>
+  <ul>
+    <li>A favorites-bar button for Edge: on any job page, click <strong>🚀 Send to Launchpad</strong> and the posting opens in Launchpad's paste-a-posting box. Highlight just the posting first if the page is busy.</li>
+    <li>Install it from <strong>Settings → Clipper</strong> (drag the yellow button to the favorites bar; Ctrl+Shift+B shows the bar). Reinstall it if Launchpad's address ever changes.</li>
+    <li>If a site blocks it, it falls back to passing the text tab-to-tab, then to copying it so you can paste.</li>
+  </ul>
+  <h3>＋ Add (top right)</h3>
+  <p>Create an opportunity, task, or contact by hand with the full form.</p>
+</section>
+
+<section class="card guide-section" id="agent">
+  <h2>3. 💬 Ask Launchpad (the agent)</h2>
+  <p>The blue <strong>💬 button at the bottom left of the Pipeline page</strong> opens it (the 🎤 at the bottom right is the Talk screen). Tell it what you want in plain English and it does it, taking several steps if needed. ✕ or <kbd>Esc</kbd> closes it; on a phone it fills the screen. It uses Claude Sonnet.</p>
+  <ul>
+    <li><strong>It can:</strong> find and read anything in Launchpad; add and edit cards, tasks, and contacts; move cards between stages (closing needs a reason); log interactions; link contacts to cards; add checklist steps; add or dismiss Discover postings; watch a new career page; run a Discover check; update your skills profile.</li>
+    <li><strong>It can't:</strong> delete anything, send emails or messages, browse the web, or apply anywhere. It can draft a message for you to send.</li>
+    <li><strong>Contacts from a description:</strong> “I met Priya Shah at networking night, she's a PM at Paychex, email priya@…, follow up Tuesday” → it fills in name, company, role, how you met, notes, email, and the follow-up date, and links her to a matching card if there is one. It checks for an existing contact first so you don't get duplicates.</li>
+    <li>It doesn't add cards or tasks you didn't ask for; it offers them instead.</li>
+    <li>Every change is listed under its reply with a link to open what it touched, and shows up in the item's activity history. Changes apply right away (no approval step), so glance at the list.</li>
+    <li>🎤 next to the box lets you talk instead of type. <kbd>Enter</kbd> sends; <kbd>Shift</kbd>+<kbd>Enter</kbd> is a new line. <strong>🆕 New chat</strong> starts fresh: long chats cost a bit more per message because the history is sent each time.</li>
+    <li><strong>Cost:</strong> usually 1–5¢ a message (a simple question ~1¢, a multi-step request ~3–5¢), shown under each reply and in Settings → AI spending as “Agent chat”. The monthly cap applies: at the cap it asks before running.</li>
+    <li><strong>Safety:</strong> postings, alert emails, and Canvas announcements can contain text that looks like instructions. The agent treats anything it reads as information only, and tells you if it spots an instruction aimed at it.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="pipeline">
+  <h2>4. Pipeline and cards (home page)</h2>
+  <p>One column per stage. The same stages work for job postings and for outreach:</p>
+  <table class="guide-table">
+    <thead><tr><th>Stage</th><th>Means</th></tr></thead>
+    <tbody>
+      <tr><td>💡 Interested</td><td>Just noticed it</td></tr>
+      <tr><td>🛠️ Preparing</td><td>Working on the application or the email</td></tr>
+      <tr><td>📨 Sent</td><td>Applied or emailed</td></tr>
+      <tr><td>⏳ Waiting</td><td>Waiting, or following up</td></tr>
+      <tr><td>💬 Talking</td><td>A reply, call, or interview</td></tr>
+      <tr><td>🎉 Offer</td><td>An offer (confetti!)</td></tr>
+      <tr><td>📦 Closed</td><td>Done. You pick why: accepted, declined, rejected, ghosted, withdrew, or not a fit</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li><strong>Drag</strong> cards between columns (on a phone, hold a moment, then drag). Dropping on Closed asks why; Rejected or Ghosted also asks “what did you learn?” (optional).</li>
+    <li><strong>Types:</strong> 💼 Job posting, 🎓 Internship, 🏅 Fellowship, ✉️ Outreach lead (a company or person you're contacting with no posting yet).</li>
+    <li><strong>Urgency</strong> (how soon): 🌿 Chill, ⏰ Soon, ⚡ Pressing, 🔥 On fire. Shown as a sticker and a colored stripe. <strong>Importance</strong> (how much it matters): ★ Low, ★★ Medium, ★★★ High. They're separate on purpose (see the Eisenhower view).</li>
+    <li>Cards show the deadline countdown (yellow within a week, red within 2 days), next action (red when late), checklist progress, linked people, and tags.</li>
+    <li><strong>Filters</strong> above the board: search (company, role, notes, people), type, urgency, importance, tag.</li>
+    <li>The <strong>Today strip</strong> above the board is covered in <a href="#focus">Focus</a> and <a href="#motivation">Goals</a>.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="drawer">
+  <h2>5. The card drawer</h2>
+  <p>Click any card (opportunity, task, or contact) to open its side panel.</p>
+  <ul>
+    <li><strong>Edit every field</strong>, then 💾 Save. Unsaved changes are protected if you close it.</li>
+    <li><strong>Header buttons:</strong> Open link ↗, 📌 Top 3 (pin to today), ▶ Focus (tasks), 📅 Add to calendar, ✕ close.</li>
+    <li><strong>Checklist:</strong> steps for the card (e.g. “finish course 1, course 2, submit”). On tasks, the checklist sets “how complete” automatically.</li>
+    <li><strong>Opportunity extras:</strong> Posting (summary, key requirements, the original posting text), Fit check &amp; tailored resume, Sent materials, 🎤 Interview prep, People (link contacts), Tasks for this card.</li>
+    <li><strong>Deadline reminders</strong> (Status section): leave blank for the default (7, 2, and 0 days before), set your own like <code>14,7,1</code>, or <code>off</code>.</li>
+    <li><strong>History</strong> at the bottom: every create, edit, stage change, and completion, with times.</li>
+    <li><strong>Task fields worth knowing:</strong> <em>planned day</em> (when you'll work on it) vs <em>due date</em> (when it must be done); <em>start time + length</em> turns it into a timed block (calls, interviews); estimated vs actual minutes; energy needed; <em>Repeat</em> (daily, weekdays, weekly): finishing it creates the next one.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="week">
+  <h2>6. This Week</h2>
+  <ul>
+    <li>Monday-to-Sunday columns with tasks, timed events (🕑), opportunity deadlines (📅), and next actions (➡️).</li>
+    <li>A task sits on its <strong>planned day</strong>, or on its due date if it has no planned day. <strong>Drag</strong> tasks between days to re-plan.</li>
+    <li>The bar under each day shows estimated hours against a 6-hour day: green, yellow past 4.5 h, red and “overloaded” past 6 h.</li>
+    <li><strong>🚨 Overdue</strong> lane: unfinished tasks past their date, late next actions, and missed deadlines. <strong>📥 Unscheduled</strong>: tasks with no date. Drag from either onto a day.</li>
+    <li>◀ ▶ change weeks; <strong>Today</strong> jumps back. <strong>📅 Export week</strong> downloads the week as one calendar file.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="contacts">
+  <h2>7. Contacts</h2>
+  <ul>
+    <li>Sort by <strong>last contacted (coldest first)</strong> to see who you've gone quiet on, by follow-up date, or by name. Anyone whose follow-up date has arrived gets a red outline and a “⏰ Follow up” tag.</li>
+    <li>“Last contacted” is calculated from the interactions you log; you never type it.</li>
+    <li>A contact's page has a <strong>📝 Log an interaction</strong> form: I emailed, They replied, Call, Coffee chat, Met at event, LinkedIn message, Other, plus a date, note, which opportunity it was about, and the next follow-up (1 week, 2 weeks, a month, or none) in one step.</li>
+    <li>Also there: the timeline of everything logged, linked opportunities, tasks for that person, Edit, and 📅 add the follow-up to your calendar.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="apply">
+  <h2>8. Applying: documents, fit check, tailored resumes</h2>
+  <h3>📄 Documents (☰ More)</h3>
+  <ul>
+    <li>Upload resume and cover letter versions (PDF or Word, up to 10 MB) or paste the text. Label them clearly, like “Resume – AI security v3”.</li>
+    <li>The text is extracted and that's what the AI reads. <em>See the text the AI reads</em> shows it; <strong>Edit</strong> fixes extraction mistakes.</li>
+    <li>Record which version you sent in a card's drawer → <strong>Sent materials</strong>.</li>
+  </ul>
+  <h3>🧑 Skills profile (Settings)</h3>
+  <p>Plain text about your skills, experience, and what you're looking for. Fit checks and tailoring read it alongside your resume, so put in what the resume leaves out: courses, projects, tools, constraints.</p>
+  <h3>🎯 Fit check (card drawer)</h3>
+  <ul>
+    <li>Pick a resume and run it. You get <strong>strong matches</strong> (each with evidence from your resume), <strong>gaps</strong> marked ⛔ dealbreaker or 📈 learnable with how to close each, <strong>3 talking points</strong>, unknowns, and a <strong>1–5 score</strong> with a one-line reason.</li>
+    <li>It's told to be blunt and evidence-only, and to pick the lower score when unsure. It doesn't flatter.</li>
+    <li>Results are saved on the card with a history. The card needs the posting first (pasted, clipped, or Summary/Key requirements filled in). About $0.02.</li>
+  </ul>
+  <h3>✂️ Tailored resume (card drawer)</h3>
+  <ul>
+    <li>Pick a resume → <strong>Tailor this resume</strong>. You get a new version aimed at that posting; your original never changes.</li>
+    <li>It may reorder, reword, add a 2-line summary, and pull in items from your skills profile. It may <strong>not</strong> invent or inflate anything (employers, dates, tools, numbers, skill levels).</li>
+    <li><strong>🚫 Not claimed</strong> lists what the posting wants that you haven't shown. That's your to-learn list.</li>
+    <li><strong>⬇️ Download Word</strong> builds a clean .docx from the current text, so edit the text on the Documents page first if you want. About $0.02.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="prep">
+  <h2>9. Interview prep and the question bank</h2>
+  <ul>
+    <li><strong>Prep page per opportunity</strong> (drawer → 🎤 Open interview prep): research notes (save when you click away), <strong>🎤 They asked me</strong> (with your answers), <strong>🔮 Likely questions</strong>, and <strong>🙋 I'll ask them</strong>.</li>
+    <li><strong>✨ Generate likely questions</strong> predicts 8–10 from the posting and your fit check (it probes your gaps), each with why it's likely and a tip for answering honestly. About $0.02. “🎤 They asked it” moves one into the asked list.</li>
+    <li><strong>📚 Question bank</strong> (Prep tab): every question from every opportunity, searchable, with tag and type filters. Tags: behavioral, technical, about me, about AI, company, situational, logistics.</li>
+    <li>⭐ marks your <strong>best answer</strong>. When the same question comes up again, Launchpad fills in that answer for you to adapt.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="rejections">
+  <h2>10. 💔 Rejection log (☰ More)</h2>
+  <ul>
+    <li>Every card that closes as Rejected or Ghosted is logged automatically, with a snapshot (so it survives even if you delete the card). You're asked an optional “what did you learn?”; you can add or edit lessons here later.</li>
+    <li>The page shows counts, how far each one got before it closed, where they came from, and a month-by-month view.</li>
+    <li><strong>Patterns</strong> are plain-English observations from simple counts (no AI), e.g. “most ended before any conversation, so the resume or first email is the bottleneck”. They appear after 3 or more entries.</li>
+    <li>Rejections earn points (they mean you applied), and your lessons feed the weekly coach.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="discover">
+  <h2>11. 🔭 Discover and 🎓 School (☰ More)</h2>
+  <h3>🔭 Discover: postings found for you</h3>
+  <ul>
+    <li>Use the <strong>source menu</strong> next to Check now to show one source at a time (80,000 Hours, aisafety.com, a company, or the web sweep).</li>
+    <li>Launchpad looks for new postings <strong>every morning at 7</strong> (or press <strong>Check now</strong>) and lists them best fit first. Nothing goes in your Pipeline until you press <strong>➕ Add to Pipeline</strong>, which makes an Interested card with the posting text saved for fit checks. <strong>✕ Dismiss</strong> hides one; the Dismissed tab can bring it back.</li>
+    <li><strong>Job-alert emails</strong> (80,000 Hours, Idealist, LinkedIn…): subscribe to the board's email alert with the Gmail Launchpad sends reminders from, and list the sender under ⚙️ Sources (80,000 Hours is there already: <code>80000hours.org</code>). Launchpad searches only for emails from those senders in the last 7 days, read-only (nothing is marked read, moved, or deleted), and the AI pulls each listing out. It doesn't crawl the 80,000 Hours website itself: their terms don't allow automated use, and the alert email is their official way to send new posts.</li>
+    <li><strong>Company career pages</strong>: for companies whose jobs page is on Greenhouse, Lever, or Ashby, paste the jobs page address (or just tell the agent “watch Anthropic's career page”). Those services publish open jobs as public data, so this is allowed. You don't name roles: the AI reads <em>every</em> open role's title and location, keeps the ones that fit your skills profile (up to 15 per company per check), then scores those properly. Each role is judged once, so a company with 600 openings costs about a cent the first time and almost nothing after. The title/location filters are optional extras.</li>
+    <li><strong>80,000 Hours</strong>: add <code>80000hours.org</code> as a career page (already on). Launchpad reads the whole job board (about 1,000 roles) once a day, the same way the page loads it, and the AI keeps the ones that fit you, with deadlines filled in. No alert emails needed.</li>
+    <li><strong>aisafety.com</strong>: add <code>aisafety.com</code> as a career page. Launchpad reads its job board (about 580 roles across AI-safety organizations) once a day and the AI keeps the ones that fit you, the same way as company pages.</li>
+    <li><strong>🌐 Web sweep</strong> (Mon, Wed, Fri 7:20 AM, or “Run it now”): the AI web-searches companies' hiring pages (Greenhouse, Lever, Ashby, Workday, which is where the jobs on LinkedIn and Indeed are actually posted) for openings that fit you, up to 3 searches, about 8–10¢ a sweep (~$1.20 a month). It can only report links that came back from the search. Turn it off with the checkbox on the Discover page.</li>
+    <li><strong>LinkedIn and Indeed themselves</strong>: Launchpad doesn't load their pages (both forbid it). Instead, set up their job-alert emails to your Gmail and add <code>linkedin.com</code> / <code>indeed.com</code> as senders; Discover reads those like the 80,000 Hours alert.</li>
+    <li><strong>Fit scores</strong> (0–100) come from your Settings → Skills profile, scored in one batch per check with Haiku. No profile = no scores (and no cost).</li>
+    <li>You get one notice per check when something new turns up (Settings → Reminders → “New postings found”, phone push by default).</li>
+    <li>Cost: about a tenth of a cent per alert email and per batch of scores, so pennies a month. At your monthly cap, emails wait (they're read later) and scores are skipped.</li>
+  </ul>
+  <h3>🎓 School: Canvas assignments and announcements</h3>
+  <ul>
+    <li>Paste two kinds of private Canvas links into <strong>🔗 Canvas links</strong> on the School page (instructions are right there): the <strong>Calendar Feed</strong> (Canvas → Calendar → Calendar Feed) and each course's <strong>announcement feed</strong> (course → Announcements → RSS Feed). No access token or IT approval needed.</li>
+    <li>Every 2 hours from 7 AM to 9 PM, each assignment due in the next 45 days becomes a <strong>task</strong> (High importance, due that day, with the course and Canvas link in its notes), so it shows on This Week and in your reminders. It's made once: delete it and it stays gone. If the professor moves the due date, the task moves too (unless it's done).</li>
+    <li>New announcements land in the 🔔 bell and, by default, as a phone push (Settings → Reminders → “New Canvas announcement”). The School page lists recent announcements, upcoming assignments, and course events for the next two weeks.</li>
+    <li>The links work like passwords, so Launchpad keeps them on the Mac and only ever shows their last few characters. If one leaks, reset it in Canvas.</li>
+    <li>Not included: grades, submissions, discussions. Those need a Canvas access token, which Golisano IT would have to allow.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="focus">
+  <h2>12. Focus tools</h2>
+  <h3>📌 Today's Top 3</h3>
+  <p>Pin up to three tasks or opportunities each day (📌 Top 3 in any drawer). They show at the top of the Pipeline; ✕ unpins. Tomorrow starts empty.</p>
+  <h3>⏱ “I have __ minutes”</h3>
+  <ul>
+    <li>Pick 15, 30, 60, or 90 minutes and your energy (low/medium/high). You get the 3 open tasks that fit, ranked by urgency, importance, and how close the due date is, with the reasons shown. No AI, no cost.</li>
+    <li>Tasks need an estimate to fit precisely (no estimate counts as 30 minutes). Timed events (calls) are left out.</li>
+  </ul>
+  <h3>Focus timer</h3>
+  <ul>
+    <li>Start it from a suggestion or from ▶ Focus in a task's drawer. 25 minutes of work, then a 5-minute break; the countdown shows in the corner and the browser tab title, with a beep at the end.</li>
+    <li>Finishing a work session adds its minutes to the task's <em>actual minutes</em> (feeding estimate accuracy, focus-hour goals, and points). ■ Stop logs the minutes so far. It keeps running if you change pages.</li>
+  </ul>
+  <h3>🧮 Eisenhower (☰ More)</h3>
+  <ul>
+    <li>A 2×2 grid of open tasks and active opportunities: <strong>🔥 Do now</strong> (urgent + important), <strong>🗓️ Schedule it</strong> (important), <strong>📦 Squeeze in or batch</strong> (urgent), <strong>🫥 Later or drop</strong>.</li>
+    <li><strong>Urgent</strong> = Pressing or On fire, or due within 3 days. <strong>Important</strong> = High (tick the box to count Medium too).</li>
+    <li>Drag a card to another box and its urgency/importance change to match. Something due within 3 days stays urgent until you change its date.</li>
+  </ul>
+  <h3>🌙 End-of-day shutdown (☰ More, or the Today strip)</h3>
+  <p>Today's numbers (tasks done, focus time, points), then each unfinished task with <strong>➡️ Tomorrow</strong>, <strong>Pick day</strong>, or <strong>🗑 Drop</strong> (deletes it), then log one win. Optional 9 PM nudge in Settings.</p>
+</section>
+
+<section class="card guide-section" id="motivation">
+  <h2>13. Goals, streak, points, levels</h2>
+  <ul>
+    <li><strong>🎯 Weekly goals</strong> (Monday–Sunday) show as rings on the home page. Choose up to 5 with ✏️ Goals: applications sent, outreach (emails, calls, chats), focus hours, tasks finished, conversations started. Defaults: 5 applications, 3 outreach, 10 focus hours. Hitting one sets off confetti.</li>
+    <li><em>Applications</em> = job/internship/fellowship cards moved to Sent. <em>Outreach</em> = outreach cards moved to Sent, plus emails, calls, coffee chats, event meetings, and LinkedIn messages you log.</li>
+    <li><strong>🔥 Streak:</strong> consecutive days on which you moved a card forward, logged an interaction, or finished a task. “At risk” means it's alive but nothing counted yet today. Optional 8 PM nudge in Settings.</li>
+  </ul>
+  <table class="guide-table">
+    <thead><tr><th>You…</th><th>Points</th></tr></thead>
+    <tbody>
+      <tr><td>Move a card forward a stage</td><td>20</td></tr>
+      <tr><td>…to Sent / Talking / Offer</td><td>25 / 30 / 100</td></tr>
+      <tr><td>Log an interaction</td><td>15</td></tr>
+      <tr><td>Close as rejected or ghosted (you applied!)</td><td>15</td></tr>
+      <tr><td>Finish a task</td><td>10</td></tr>
+      <tr><td>Log a lesson, log a win, record a sent document</td><td>5 each</td></tr>
+      <tr><td>Log an interview question</td><td>3</td></tr>
+      <tr><td>Focus</td><td>1 per 5 minutes</td></tr>
+    </tbody>
+  </table>
+  <table class="guide-table">
+    <thead><tr><th>Level</th><th>From</th></tr></thead>
+    <tbody>
+      <tr><td>🌱 Sticker Collector</td><td>0</td></tr>
+      <tr><td>✉️ Cover Letter Cadet</td><td>100</td></tr>
+      <tr><td>🥷 Networking Ninja</td><td>250</td></tr>
+      <tr><td>🤠 Interview Wrangler</td><td>500</td></tr>
+      <tr><td>🧲 Offer Magnet</td><td>900</td></tr>
+      <tr><td>🚀 Career Rocketeer</td><td>1,500</td></tr>
+      <tr><td>🏆 Launchpad Legend</td><td>2,500</td></tr>
+    </tbody>
+  </table>
+  <p class="muted small">Everything here is calculated from your activity history, so it can't drift out of sync. Demo data doesn't count.</p>
+</section>
+
+<section class="card guide-section" id="stats">
+  <h2>14. 📊 Stats (☰ More)</h2>
+  <ul>
+    <li><strong>Tiles:</strong> how many reached Sent, response rate (share that got a reply or reached Talking), average days to hear back (Sent → Talking), and actual-vs-estimated time.</li>
+    <li><strong>Pipeline funnel:</strong> how many reached each stage; the drop between bars is where things stall.</li>
+    <li><strong>Applications and outreach per week</strong> for the last 8 weeks.</li>
+    <li><strong>Estimates vs. reality</strong> for your last finished tasks, with a plain verdict (“you take about 25% longer than you plan”).</li>
+    <li>Every chart has a caption, hover details, and <em>Show as table</em>. Colors were checked for contrast and color-blind readability in all three themes.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="coach">
+  <h2>15. 🏋️ Weekly review and coach (☰ More)</h2>
+  <ul>
+    <li>Every <strong>Friday at 4 PM</strong> the coach reads the week's real numbers: what you did, planned vs. logged hours, goal progress, stalled cards, overdue follow-ups, rejection lessons, and wins. It's emailed to you and shown here. <strong>Generate</strong> runs it any time (about $0.01–0.03).</li>
+    <li>It's blunt and specific: real numbers and named items, no pep talk, no insults. Sections: headline, scoreboard, went well, stalled (with next steps), hard truths, and exactly <strong>3 priorities</strong> for next week.</li>
+    <li>Add <strong>📝 My notes</strong> and save. <em>What the coach saw</em> shows the exact numbers it was given. Past weeks are in the dropdown.</li>
+    <li>If your AI spending cap is reached on Friday, it skips and leaves a note in the 🔔 bell; Generate lets you run it anyway.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="reminders">
+  <h2>16. Reminders: email, push, bell, calendar</h2>
+  <p>Launchpad checks every 15 minutes while it's running (on your laptop, only while the laptop is awake and Launchpad is open in a terminal; on an always-on Mac, all the time). <strong>Nothing is sent from 10 PM to 7 AM.</strong> Each reminder goes out once, and several at once arrive as one email and one push.</p>
+  <table class="guide-table">
+    <thead><tr><th>Reminder</th><th>Default</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td>Deadline coming up</td><td>email + push</td><td>7 days, 2 days, and the morning of (per-card override)</td></tr>
+      <tr><td>No update in a week</td><td>email</td><td>A card in Sent or Waiting hasn't changed in 7 days</td></tr>
+      <tr><td>Contact follow-up</td><td>email + push</td><td>A contact's follow-up date arrives</td></tr>
+      <tr><td>Next action</td><td>push</td><td>A card's next-action date arrives</td></tr>
+      <tr><td>Morning digest</td><td>email</td><td>Weekdays 8:00 AM: today, overdue, this week's deadlines, follow-ups</td></tr>
+      <tr><td>Plan your week</td><td>email</td><td>Sundays 6:00 PM</td></tr>
+      <tr><td>Weekly review</td><td>email</td><td>Fridays 4:00 PM</td></tr>
+      <tr><td>Streak at risk</td><td>off</td><td>8 PM, if nothing counted today</td></tr>
+      <tr><td>Shutdown nudge</td><td>off</td><td>9 PM</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li><strong>Email</strong> comes from your Gmail to your school inbox, subject starting <code>[Launchpad]</code>, with buttons that open the right card.</li>
+    <li><strong>Push</strong> goes through the ntfy app and is deliberately vague (“Deadline in 2 days — open Launchpad”); details stay in email and the app.</li>
+    <li><strong>🔔 The bell</strong> (top right) lists recent reminders; opening it marks them read.</li>
+    <li><strong>📅 Calendar:</strong> “Add to calendar” on cards and contacts, and “Export week”, download .ics files for Outlook/Google/Apple. Calls and interviews are timed events in Eastern time; deadlines are all-day.</li>
+    <li>Change channels, addresses, and timings in <strong>Settings → Reminders</strong>; there are also <em>Send test email</em>, <em>Send test push</em>, <em>Run check now</em>, and previews of each email.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="ai">
+  <h2>17. AI: what it does, what it costs, how it's kept safe</h2>
+  <table class="guide-table">
+    <thead><tr><th>Feature</th><th>Model</th><th>About</th></tr></thead>
+    <tbody>
+      <tr><td>Brain dump, Talk, pasted posting</td><td>Claude Haiku 5.5</td><td>$0.001 each</td></tr>
+      <tr><td>Fit check, likely questions, tailored resume</td><td>Claude Sonnet 5.5</td><td>$0.02 each</td></tr>
+      <tr><td>Weekly coach</td><td>Claude Sonnet 5.5</td><td>$0.01–0.03 a week</td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li>A heavy month of job searching runs about $1.50–2; a light month is well under $1.</li>
+    <li><strong>💸 Spending cap</strong> (Settings → AI): $3.00 a month by default. At the cap, each AI action asks <em>“Run it anyway?”</em>; you can also allow the rest of the month or raise the cap. The meter shows this month's spending by feature. It's an estimate; the Anthropic Console billing page is the official total.</li>
+    <li><strong>Safety:</strong> pasted and clipped text is treated as untrusted (postings can hide instructions aimed at AI). The AI can only return data in a fixed format; it has no tools and can't do anything on its own. The server re-checks every value, and nothing is saved until you accept it.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="settings">
+  <h2>18. Settings, themes, demo data</h2>
+  <ul>
+    <li><strong>Settings (☰ More):</strong> 🧑 Skills profile, 🔔 Reminders, 🤖 AI and 💸 spending, 📎 Clipper, 🧪 Demo data.</li>
+    <li><strong>Themes</strong> (top right): 🍦 Sticker, 🍵 Matcha, 🌙 Night Arcade. Saved per browser.</li>
+    <li><strong>Demo data:</strong> about 11 made-up opportunities, 12 tasks, and 8 contacts. <em>Wipe demo data</em> removes only the fake rows; your real data stays. Demo rows don't count toward points, and don't send reminders unless you tick the testing box in Settings → Reminders.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="phone">
+  <h2>19. Phone, app install, and login</h2>
+  <ul>
+    <li><strong>Address:</strong> on your laptop, <code>http://127.0.0.1:5050</code>. To use it from your phone too, run it on an always-on Mac with Tailscale (see README → “Optional: running it on an always-on Mac”); <code>tailscale serve</code> gives it an https address like <code>https://your-mac.your-tailnet.ts.net</code> that works on any device signed in to your Tailscale.</li>
+    <li><strong>Install as an app:</strong> Edge (laptop) ⋯ → Apps → Install this site as an app. iPhone: Safari → Share → Add to Home Screen. Android: ⋮ → Install app (long-press the icon for the <em>Talk</em> shortcut).</li>
+    <li><strong>Login:</strong> one password; each device stays logged in for 30 days. ☰ More → 🚪 Log out. After 5 wrong tries it pauses for 60 seconds. Set, change, or remove it by running <code>python set_password.py</code> on the computer running Launchpad (add <code>--off</code> to remove it). Only needed if other devices can reach it.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="behind">
+  <h2>20. Behind the scenes: where it runs</h2>
+  <ul>
+    <li><strong>On a laptop</strong> (the usual setup): it runs while <code>python app.py</code> is running. Reminders, Discover, and Canvas checks happen only then.</li>
+    <li><strong>On an always-on Mac</strong> (optional): it runs all the time, starts at boot, and restarts itself within about 10 seconds if it crashes. Setup is in README.md.</li>
+    <li><strong>Backups:</strong> every night at 3 AM, a zip of the database and your uploaded documents, last 14 kept (in the <code>data/backups</code> folder).</li>
+    <li><strong>Getting updates:</strong> <code>git pull</code> in the Launchpad folder, then restart it. Your data and <code>.env</code> are never touched. (With an always-on Mac, <code>bash deploy/deploy.sh</code> copies the code over.)</li>
+    <li>Full technical details are in <code>README.md</code> in the project folder.</li>
+  </ul>
+</section>
+
+<section class="card guide-section" id="help">
+  <h2>21. Troubleshooting</h2>
+  <dl class="guide-faq">
+    <dt>The page won't load.</dt>
+    <dd>Check Tailscale is on and set to your personal account. If it still fails, the Mac may be off or offline.</dd>
+    <dt>“Too many tries” at login.</dt>
+    <dd>Wait 60 seconds, then try again.</dd>
+    <dt>The 🎤 doesn't listen.</dt>
+    <dd>Allow the microphone for this site in the browser's settings, make sure you're on the https:// address, or use your keyboard's mic key in the text box.</dd>
+    <dt>No reminder emails.</dt>
+    <dd>Check your school Junk folder and add your Gmail to Safe senders. Settings → Reminders → Send test email shows whether Gmail is set up.</dd>
+    <dt>No push notifications.</dt>
+    <dd>In the ntfy app, make sure you're subscribed to the exact topic from the Mac's <code>.env</code>, then Settings → Send test push.</dd>
+    <dt>The AI says the cap is reached.</dt>
+    <dd>Click OK to run it anyway, or raise the cap or allow the rest of the month in Settings → AI spending.</dd>
+    <dt>The clipper didn't work on a site.</dt>
+    <dd>It may have copied the text instead; open Launchpad and paste it into 📋 Paste a posting.</dd>
+    <dt>A fit check or tailoring says “add the posting first”.</dt>
+    <dd>Paste or clip the posting, or fill in the card's Summary and Key requirements.</dd>
+  </dl>
+</section>
+</article>
+{% endblock %}

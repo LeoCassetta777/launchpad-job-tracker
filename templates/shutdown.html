@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Shutdown{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>🌙 End-of-day shutdown</h1>
+  <p class="page-sub">Two minutes: decide what happens to today's unfinished tasks, then write down one win. Then you're done for the day.</p>
+</div>
+<div id="shutdown-page"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/shutdown.js') }}"></script>{% endblock %}

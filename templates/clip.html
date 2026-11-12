@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Clipped posting{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>📎 Clipped posting</h1>
+  <p class="page-sub" id="clip-status">Waiting for the page you clipped…</p>
+</div>
+<div class="card clip-card" id="clip-card" hidden>
+  <p><strong id="clip-title"></strong></p>
+  <p class="muted small" id="clip-url"></p>
+  <p id="clip-note"></p>
+  <p>It's in the box above. Check it, then press <strong>✨ Extract posting</strong>. Nothing is saved until you accept the preview.</p>
+</div>
+{% endblock %}
+{% block scripts %}
+<!-- The clipped data from a POST (or null). tojson makes it safe to embed. -->
+<script id="clip-data" type="application/json">{{ clip_data | tojson }}</script>
+<script>
+  /*
+   * Fill the paste-a-posting box with what the bookmarklet sent.
+   * Main path: the data arrived in the POST and is embedded above.
+   * Backup path: this tab was opened directly, so ask the tab that opened it.
+   */
+  function showClip(clip) {
+    prefillPosting(clip);
+    document.getElementById("clip-status").textContent = "Got it.";
+    document.getElementById("clip-title").textContent = clip.title || "(untitled page)";
+    document.getElementById("clip-url").textContent = clip.url || "";
+    document.getElementById("clip-note").textContent = clip.selected
+      ? "✂️ You highlighted text, so only that was captured."
+      : "📄 Nothing was highlighted, so the whole page text was captured. Menus and other listings are fine; the AI focuses on the posting.";
+    document.getElementById("clip-card").hidden = false;
+  }
+
+  const embedded = JSON.parse(document.getElementById("clip-data").textContent);
+  if (embedded) {
+    showClip(embedded);
+  } else if (window.opener) {
+    window.addEventListener("message", (e) => {
+      // Only accept data from the tab that opened this one, in the shape the bookmarklet sends.
+      if (e.source !== window.opener || !e.data || e.data.type !== "launchpad-clip") return;
+      const c = e.data.clip || {};
+      showClip({ url: String(c.url || ""), title: String(c.title || ""), text: String(c.text || "").slice(0, 60000), selected: c.selected === "1" });
+    });
+    window.opener.postMessage("launchpad-ready", "*"); // contains no data, so "*" is fine
+  } else {
+    document.getElementById("clip-status").textContent =
+      "Nothing was clipped. Use the “Send to Launchpad” favorite on a job page, or paste a posting into the box above.";
+  }
+</script>
+{% endblock %}

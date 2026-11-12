@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Weekly review{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>🏋️ Weekly review</h1>
+  <p class="page-sub">Your coach reads the week's real numbers and gives you blunt, specific feedback and 3 priorities. It runs by itself on Fridays at 4 PM (and is emailed), or click Generate. Add your own notes, then save.</p>
+</div>
+<div id="review-page"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/review.js') }}"></script>{% endblock %}

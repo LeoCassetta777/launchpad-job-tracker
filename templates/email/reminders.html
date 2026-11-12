@@ -1,0 +1,22 @@
+{% extends "email/base.html" %}
+{% set colors = {"deadline": "#FF5A36", "followup": "#FFC83D", "contact": "#4CC9F0", "next_action": "#B79CFF"} %}
+{% set icons = {"deadline": "📅", "followup": "⏳", "contact": "👤", "next_action": "➡️"} %}
+{% block body %}
+<h1 style="margin:0 0 14px 0;font-size:22px;font-family:Arial Black,Arial,sans-serif;">
+  {{ "Heads up" if items|length == 1 else items|length ~ " reminders" }}
+</h1>
+{% for item in items %}
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 12px 0;">
+  <tr>
+    <td width="8" style="background:{{ colors.get(item.trigger, '#3DDC97') }};border-radius:8px 0 0 8px;">&nbsp;</td>
+    <td style="border:2px solid #1E1E24;border-left:0;border-radius:0 12px 12px 0;padding:12px 14px;">
+      <div style="font-size:16px;font-weight:bold;">{{ icons.get(item.trigger, '🔔') }} {{ item.title }}</div>
+      {% if item.body %}<div style="font-size:14px;color:#5B5560;margin-top:4px;">{{ item.body }}</div>{% endif %}
+      <div style="margin-top:10px;">
+        <a href="{{ base_url }}{{ item.link }}" style="display:inline-block;background:#FFC83D;color:#1E1E24;border:2px solid #1E1E24;border-radius:999px;padding:6px 14px;font-weight:bold;text-decoration:none;font-size:14px;">Open in Launchpad →</a>
+      </div>
+    </td>
+  </tr>
+</table>
+{% endfor %}
+{% endblock %}

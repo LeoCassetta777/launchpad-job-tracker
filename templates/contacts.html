@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Contacts{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Contacts</h1>
+  <p class="page-sub" id="contacts-summary">People you're talking to. Follow-ups that are due get a red outline.</p>
+</div>
+
+<form class="filters" onsubmit="return false">
+  <input type="search" id="c-search" placeholder="🔎 Search name, company, notes…" aria-label="Search contacts">
+  <label class="inline-label">Sort by
+    <select id="c-sort">
+      <option value="last">Last contacted (coldest first)</option>
+      <option value="followup">Follow-up date (soonest first)</option>
+      <option value="name">Name</option>
+    </select>
+  </label>
+</form>
+
+<div class="contact-grid" id="contact-grid"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/contacts.js') }}"></script>{% endblock %}

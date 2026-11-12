@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}School{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>🎓 School (Canvas)</h1>
+  <p class="page-sub">Your Canvas assignments become tasks on This Week, and course announcements show up in the 🔔 bell. Synced every 2 hours from 7 AM to 9 PM. Launchpad reads Canvas's private feed links, so no access token is needed.</p>
+</div>
+
+<div class="disc-bar">
+  <div id="school-status" class="muted small"></div>
+  <button class="btn btn-primary" type="button" id="school-run">🔄 Sync now</button>
+</div>
+<pre class="code" id="school-log" hidden></pre>
+
+<div class="school-grid">
+  <section class="card">
+    <h2>📝 Assignments due</h2>
+    <div id="school-assignments"></div>
+  </section>
+  <section class="card">
+    <h2>📣 Announcements</h2>
+    <div id="school-announcements"></div>
+  </section>
+  <section class="card">
+    <h2>🗓️ Course events (next 2 weeks)</h2>
+    <div id="school-events"></div>
+  </section>
+</div>
+
+<details class="card settings-card disc-sources" id="school-links">
+  <summary><strong>🔗 Canvas links</strong></summary>
+  <p class="muted small">These links work like passwords: anyone with them can read your Canvas calendar or announcements. Launchpad keeps them on the Mac and never shows them again here (you'll only see the end of each link). Don't paste them anywhere else. If one leaks, Canvas's Calendar Feed page has a button to reset it.</p>
+
+  <h3>1. Calendar feed (assignments + events)</h3>
+  <ol class="small">
+    <li>In Canvas, open <strong>Calendar</strong> (left menu).</li>
+    <li>At the bottom of the right-hand column, click <strong>Calendar Feed</strong>.</li>
+    <li>Copy the link it shows, paste it below, and click Save.</li>
+  </ol>
+  <p id="cal-state" class="small"></p>
+  <div class="inline-row wrap">
+    <input id="cal-input" type="url" placeholder="https://…/feeds/calendars/user_….ics" aria-label="Canvas calendar feed link" autocomplete="off">
+    <button class="btn btn-primary" type="button" id="cal-save">💾 Save</button>
+    <button class="btn btn-ghost" type="button" id="cal-clear" hidden>Remove</button>
+  </div>
+
+  <h3>2. Announcement feeds (one per course)</h3>
+  <ol class="small">
+    <li>Open a course in Canvas and go to <strong>Announcements</strong>.</li>
+    <li>Click <strong>RSS Feed</strong> at the top right (if your browser opens a page of code, just copy that page's address).</li>
+    <li>Paste it below and click Add. Repeat for each course.</li>
+  </ol>
+  <ul id="feed-list" class="small"></ul>
+  <div class="inline-row wrap">
+    <input id="feed-input" type="url" placeholder="https://…/feeds/announcements/enrollment_….atom" aria-label="Course announcement feed link" autocomplete="off">
+    <button class="btn btn-primary" type="button" id="feed-add">➕ Add</button>
+  </div>
+
+  <h3>3. How far ahead</h3>
+  <div class="inline-row wrap">
+    <label class="field"><span class="field-label">Make tasks for assignments due within (days)</span>
+      <input id="days-ahead" type="number" min="1" max="180"></label>
+    <button class="btn btn-small" type="button" id="days-save">Save</button>
+  </div>
+  <p class="muted small">Grades, submissions, and discussions aren't in these feeds. Seeing those would need a Canvas access token, which only Golisano IT can allow.</p>
+</details>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/school.js') }}"></script>{% endblock %}

@@ -1,0 +1,2 @@
+# Store all text files with Unix line endings so they behave the same on the Mac mini.
+* text=auto eol=lf

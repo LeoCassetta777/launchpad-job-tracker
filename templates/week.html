@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}This Week{% endblock %}
+{% block content %}
+<div class="page-head week-head">
+  <div>
+    <h1 id="week-title">This Week</h1>
+    <p class="page-sub">Drag tasks to the day you'll do them. The bar under each day shows planned hours.</p>
+  </div>
+  <div class="week-nav">
+    <button class="btn" id="prev-week" aria-label="Previous week">◀</button>
+    <button class="btn" id="this-week">Today</button>
+    <button class="btn" id="next-week" aria-label="Next week">▶</button>
+    <a class="btn" id="export-week" href="/calendar/week.ics" download title="Download this week as a calendar file">📅 Export week</a>
+  </div>
+</div>
+
+<div class="lanes">
+  <section class="lane lane-overdue">
+    <h2>🚨 Overdue <span class="count" id="overdue-count"></span></h2>
+    <div class="lane-list" id="overdue-list"></div>
+  </section>
+  <section class="lane lane-unscheduled">
+    <h2>📥 Unscheduled <span class="count" id="unscheduled-count"></span></h2>
+    <div class="lane-list" id="unscheduled-list" data-lane="unscheduled"></div>
+  </section>
+</div>
+
+<div class="week-grid" id="week-grid"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/week.js') }}"></script>{% endblock %}

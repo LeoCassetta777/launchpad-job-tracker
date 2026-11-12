@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Eisenhower{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Eisenhower view</h1>
+  <p class="page-sub" id="matrix-caption">
+    <strong>Urgent</strong> = urgency Pressing or On fire, or due within 3 days.
+    <strong>Important</strong> = High importance<span id="medium-note"></span>.
+    Drag a card to another box to change its urgency and importance to match.
+  </p>
+  <label class="check-field"><input type="checkbox" id="include-medium"> <span>Count Medium importance as important</span></label>
+</div>
+<div class="matrix" id="matrix">
+  <section class="quad q-do" data-urgent="1" data-important="1">
+    <header><h2>🔥 Do now</h2><span class="muted small">urgent + important</span></header>
+    <div class="quad-list"></div>
+  </section>
+  <section class="quad q-schedule" data-urgent="0" data-important="1">
+    <header><h2>🗓️ Schedule it</h2><span class="muted small">important, not urgent</span></header>
+    <div class="quad-list"></div>
+  </section>
+  <section class="quad q-batch" data-urgent="1" data-important="0">
+    <header><h2>📦 Squeeze in or batch</h2><span class="muted small">urgent, not important</span></header>
+    <div class="quad-list"></div>
+  </section>
+  <section class="quad q-later" data-urgent="0" data-important="0">
+    <header><h2>🫥 Later or drop</h2><span class="muted small">neither</span></header>
+    <div class="quad-list"></div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/matrix.js') }}"></script>{% endblock %}

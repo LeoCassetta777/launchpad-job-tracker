@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Rejection log{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Rejection log</h1>
+  <p class="page-sub">Every card that closed as rejected or ghosted. A rejection means you applied, which is the hard part. The patterns below come from simple counts, no AI. Your lessons also feed the weekly coach (Phase 5).</p>
+</div>
+<div id="rej-page"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/rejections.js') }}"></script>{% endblock %}

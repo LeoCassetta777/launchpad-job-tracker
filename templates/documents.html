@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Documents{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Documents</h1>
+  <p class="page-sub">Resume and cover letter versions. Their text is what fit checks read. Record which version you sent from a card's drawer.
+    Your skills profile lives in <a href="/settings#skills-profile">Settings</a>.</p>
+</div>
+
+<section class="card upload-card">
+  <h2>➕ Add a version</h2>
+  <form id="doc-form" class="form-grid" onsubmit="return false">
+    <label class="field"><span class="field-label">Label *</span>
+      <input type="text" name="label" placeholder="Resume – AI security v3" required></label>
+    <label class="field"><span class="field-label">Kind</span>
+      <select name="kind" id="doc-kind"></select></label>
+    <label class="field wide"><span class="field-label">PDF or Word file (up to 10 MB)</span>
+      <input type="file" name="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></label>
+    <details class="wide">
+      <summary>No file? Paste the text instead</summary>
+      <textarea name="text" rows="8" placeholder="Paste the full text of the resume or cover letter"></textarea>
+    </details>
+    <div class="wide"><button class="btn btn-primary" type="submit" id="doc-submit">⬆️ Save version</button></div>
+  </form>
+</section>
+
+<div id="doc-list"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/documents.js') }}"></script>{% endblock %}

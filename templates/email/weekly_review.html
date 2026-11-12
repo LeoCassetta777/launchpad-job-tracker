@@ -1,0 +1,36 @@
+{% extends "email/base.html" %}
+{% macro section(title, color) %}
+<div style="margin:18px 0 8px 0;">
+  <span style="display:inline-block;background:{{ color }};border:2px solid #1E1E24;border-radius:999px;padding:3px 12px;font-weight:bold;font-size:14px;">{{ title }}</span>
+</div>
+{% endmacro %}
+{% block body %}
+<h1 style="margin:0;font-size:22px;font-family:Arial Black,Arial,sans-serif;">Weekly review 🏋️</h1>
+<p style="margin:6px 0 0 0;color:#5B5560;">Week of {{ monday.strftime("%B") }} {{ monday.day }}</p>
+<p style="margin:14px 0 0 0;font-size:16px;font-weight:bold;">{{ coach.headline }}</p>
+
+{{ section("📊 Scoreboard", "#4CC9F0") }}
+{% for line in coach.scoreboard %}<div style="padding:4px 0;font-size:15px;">• {{ line }}</div>{% endfor %}
+
+{% if coach.went_well %}
+{{ section("✅ Went well", "#3DDC97") }}
+{% for line in coach.went_well %}<div style="padding:4px 0;font-size:15px;">• {{ line }}</div>{% endfor %}
+{% endif %}
+
+{% if coach.stalled %}
+{{ section("🧊 Stalled", "#FFC83D") }}
+{% for s in coach.stalled %}<div style="padding:5px 0;font-size:15px;"><strong>{{ s.item }}</strong> — {{ s.what_to_do }}</div>{% endfor %}
+{% endif %}
+
+{% if coach.hard_truths %}
+{{ section("🪞 Hard truths", "#FF5A36") }}
+{% for line in coach.hard_truths %}<div style="padding:4px 0;font-size:15px;">• {{ line }}</div>{% endfor %}
+{% endif %}
+
+{{ section("🎯 Next week's 3 priorities", "#B79CFF") }}
+{% for p in coach.priorities %}<div style="padding:5px 0;font-size:15px;"><strong>{{ loop.index }}. {{ p.priority }}</strong><br><span style="color:#5B5560;">{{ p.why }}</span></div>{% endfor %}
+
+<p style="margin:18px 0 0 0;">
+  <a href="{{ base_url }}/review" style="display:inline-block;background:#FFC83D;color:#1E1E24;border:2px solid #1E1E24;border-radius:999px;padding:8px 16px;font-weight:bold;text-decoration:none;">Add your notes →</a>
+</p>
+{% endblock %}

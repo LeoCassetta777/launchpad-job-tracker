@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Talk{% endblock %}
+{% block content %}
+<!-- The Talk screen: one giant mic for brain dumps on the go (talk.js). -->
+<section class="talk-page">
+  <button type="button" class="talk-mic" id="talk-mic" aria-pressed="false">
+    <span class="talk-mic-icon" aria-hidden="true">🎤</span>
+    <span class="talk-mic-label" id="talk-label">Tap to talk</span>
+  </button>
+  <p class="talk-hint muted" id="talk-hint">Say anything: deadlines, people to follow up with, homework, ideas. Tap again when you're done.</p>
+
+  <label class="sr-only" for="talk-text">What you said</label>
+  <textarea id="talk-text" class="talk-text" rows="6" placeholder="Your words show up here. You can fix anything before sorting."></textarea>
+
+  <div class="talk-actions">
+    <button type="button" class="btn btn-primary talk-sort" id="talk-sort">✨ Sort it out</button>
+    <button type="button" class="btn btn-ghost" id="talk-clear">Clear</button>
+  </div>
+  <p class="muted small talk-note">Nothing is saved until you accept the cards. What you've said is kept on this device until then, even if you close the app.</p>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/talk.js') }}"></script>{% endblock %}

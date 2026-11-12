@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Discover{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>🔭 Discover</h1>
+  <p class="page-sub">Postings Launchpad found for you in job-alert emails and on company career pages, scored against your skills profile. Nothing goes into your Pipeline until you press ➕. Checked automatically every morning at 7.</p>
+</div>
+
+<div class="disc-bar">
+  <div class="qa-modes" role="tablist" aria-label="Show">
+    <button type="button" class="pill selected" data-status="new" aria-pressed="true">✨ New <span data-count="new"></span></button>
+    <button type="button" class="pill" data-status="added" aria-pressed="false">➕ Added <span data-count="added"></span></button>
+    <button type="button" class="pill" data-status="dismissed" aria-pressed="false">✕ Dismissed <span data-count="dismissed"></span></button>
+  </div>
+  <label class="disc-source-pick"><span class="sr-only">Show source</span>
+    <select id="disc-source" aria-label="Show postings from"><option value="">All sources</option></select></label>
+  <button class="btn btn-primary" type="button" id="disc-run">🔄 Check now</button>
+</div>
+<div id="disc-status" class="disc-status muted small"></div>
+<div class="card disc-sweep" id="disc-sweep">
+  <div>
+    <strong>🌐 Web sweep</strong>
+    <span class="muted small">Mon, Wed, Fri at 7:20 AM. The AI web-searches companies' hiring pages (Greenhouse, Lever, Ashby, Workday: where the jobs on LinkedIn and Indeed are posted) for openings that fit your profile. About 8–10¢ each. For LinkedIn and Indeed themselves, set up their job-alert emails (see Sources).</span>
+    <span class="muted small" id="sweep-last"></span>
+  </div>
+  <label class="check-field small"><input type="checkbox" id="sweep-on"> <span>On</span></label>
+  <button class="btn btn-small" type="button" id="sweep-run">🔎 Run it now</button>
+</div>
+<div id="disc-list" class="disc-list"></div>
+
+<details class="card settings-card disc-sources" id="disc-sources">
+  <summary><strong>⚙️ Sources: where Discover looks</strong></summary>
+  <form id="sources-form" onsubmit="return false">
+    <h3>📬 Job-alert emails</h3>
+    <p class="muted small">Sign up for a job board's email alert using <strong id="gmail-addr">your Gmail</strong> (the one Launchpad sends reminders from). Launchpad reads only emails <em>from</em> the senders below, read-only, from the last 7 days, and the AI pulls out each listing.</p>
+    <ul class="muted small">
+      <li><strong>80,000 Hours:</strong> on <a href="https://jobs.80000hours.org/" target="_blank" rel="noopener noreferrer">jobs.80000hours.org</a>, set your filters, then “Subscribe to all new job posts” (or to your filtered search). Sender: <code>80000hours.org</code></li>
+      <li><strong>LinkedIn:</strong> search jobs on LinkedIn, set your filters, turn on “Set alert” (daily or weekly, email). Sender: <code>linkedin.com</code></li>
+      <li><strong>Indeed:</strong> run a search, then “Get new jobs for this search by email”. Sender: <code>indeed.com</code></li>
+      <li>Others work the same way, like Idealist (<code>idealist.org</code>). Add the sender's address or domain.</li>
+    </ul>
+    <label class="field"><span class="field-label">Senders (one per line)</span>
+      <textarea name="senders" rows="3" placeholder="80000hours.org"></textarea></label>
+
+    <h3>🏢 Company career pages</h3>
+    <p class="muted small">Launchpad reads <em>every</em> open role and the AI keeps the ones that fit your <a href="/settings#skills-profile">skills profile</a>, so you don't need to name roles. Works for companies whose jobs page is on <strong>Greenhouse</strong>, <strong>Lever</strong>, or <strong>Ashby</strong> (look at the address of their “Apply” page: <code>boards.greenhouse.io/…</code>, <code>jobs.lever.co/…</code>, <code>jobs.ashbyhq.com/…</code>). Paste that address, one company per line.</p>
+    <label class="field"><span class="field-label">Career pages (one per line)</span>
+      <textarea name="boards" rows="4" placeholder="https://job-boards.greenhouse.io/companyname&#10;https://jobs.lever.co/companyname&#10;ashby:companyname"></textarea></label>
+    <div class="form-grid">
+      <label class="field"><span class="field-label">Optional: only titles containing (blank = let the AI judge everything)</span>
+        <input name="keywords" placeholder="intern, fellow, analyst, associate"></label>
+      <label class="field"><span class="field-label">Optional: only locations containing (remote always counts)</span>
+        <input name="locations" placeholder="Rochester, Buffalo, New York"></label>
+    </div>
+    <div class="inline-row wrap">
+      <button class="btn btn-primary" type="button" id="sources-save">💾 Save sources</button>
+      <span class="muted small">Cost: reading an alert email or scoring a batch is about a tenth of a cent with Haiku, and it counts toward your monthly AI cap.</span>
+    </div>
+  </form>
+</details>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/discover.js') }}"></script>{% endblock %}

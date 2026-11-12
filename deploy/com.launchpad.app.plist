@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd agent for Launchpad on the Mac mini. deploy/setup_mac.sh copies this to
+  ~/Library/LaunchAgents/ with __HOME__ replaced by your home folder.
+
+  RunAtLoad  start when you log in (the Mac logs in automatically at boot)
+  KeepAlive  restart it if it ever stops or crashes (ThrottleInterval: wait 10 s between tries)
+  Logs       data/launchpad.log
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.launchpad.app</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>__HOME__/launchpad/.venv/bin/python</string>
+    <string>__HOME__/launchpad/serve.py</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>__HOME__/launchpad</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+  <key>StandardOutPath</key>
+  <string>__HOME__/launchpad/data/launchpad.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/launchpad/data/launchpad.log</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONUNBUFFERED</key>
+    <string>1</string>
+  </dict>
+</dict>
+</plist>

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Pipeline{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Pipeline</h1>
+  <p class="page-sub">Drag cards between columns as things move. Click a card to edit it.</p>
+</div>
+
+<!-- The agent: a 💬 button at the bottom left opens the chat (agentchat.js, agent.py) -->
+<button type="button" class="agent-fab" id="agent-fab" aria-label="Ask Launchpad (chat with the agent)" aria-expanded="false" aria-controls="agent-panel" title="Ask Launchpad">💬</button>
+<section class="card agent-panel" id="agent-panel" role="dialog" aria-label="Ask Launchpad" hidden>
+  <div class="agent-head">
+    <h2>💬 Ask Launchpad</h2>
+    <button type="button" class="btn btn-small btn-ghost" id="agent-new">🆕 New chat</button>
+    <button type="button" class="icon-btn" id="agent-close" aria-label="Close chat">✕</button>
+    <span class="muted small agent-sub">Adds, edits, and moves cards, tasks, and contacts. Never deletes. About 1–5¢ a message.</span>
+  </div>
+  <div class="agent-log" id="agent-log" aria-live="polite"></div>
+  <div class="agent-input-row">
+    <textarea id="agent-input" rows="2" placeholder="Tell me about a contact, move a card, plan my week…" aria-label="Message the agent"></textarea>
+    <button type="button" class="btn mic-btn" id="agent-mic" aria-pressed="false" title="Talk instead of typing" hidden>🎤</button>
+    <button type="button" class="btn btn-primary" id="agent-send">Send ➤</button>
+  </div>
+</section>
+
+<!-- Today's Top 3, weekly goals, streak and level (home.js) -->
+<section class="today-strip" id="today-strip" aria-label="Today"></section>
+
+<form class="filters" id="filters" onsubmit="return false">
+  <input type="search" id="f-search" placeholder="🔎 Search company, role, notes, people…" aria-label="Search">
+  <select id="f-type" aria-label="Filter by type"><option value="">All types</option></select>
+  <select id="f-urgency" aria-label="Filter by urgency"><option value="">Any urgency</option></select>
+  <select id="f-importance" aria-label="Filter by importance"><option value="">Any importance</option></select>
+  <select id="f-tag" aria-label="Filter by tag"><option value="">Any tag</option></select>
+  <button type="button" class="btn btn-ghost" id="f-clear">Clear</button>
+  <span class="filter-count" id="f-count"></span>
+</form>
+
+<div class="board" id="board" aria-label="Pipeline board"></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pipeline.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="{{ url_for('static', filename='js/agentchat.js') }}"></script>
+{% endblock %}

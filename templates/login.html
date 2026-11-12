@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-theme="sticker">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in · Launchpad</title>
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("lp-theme") || "sticker"; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}">
+  <meta name="theme-color" content="#FFF6E5">
+</head>
+<body>
+  <main class="login-page">
+    <form class="card login-card" method="post" action="{{ url_for('login') }}">
+      <img src="{{ url_for('static', filename='icons/icon-192.png') }}" alt="" width="72" height="72">
+      <h1>Launchpad</h1>
+      {% if message %}<p class="login-message" role="alert">{{ message }}</p>{% endif %}
+      <input type="hidden" name="next" value="{{ next }}">
+      <label class="field">
+        <span class="field-label">Password</span>
+        <input type="password" name="password" autocomplete="current-password" required autofocus>
+      </label>
+      <button class="btn btn-primary" type="submit">🚀 Log in</button>
+      <p class="muted small">You'll stay logged in on this device for 30 days.</p>
+    </form>
+  </main>
+</body>
+</html>

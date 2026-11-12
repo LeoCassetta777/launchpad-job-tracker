@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" data-theme="sticker">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Launchpad{% endblock %} · Launchpad</title>
+
+  <!-- Apply the saved theme before the page draws, so it doesn't flash the default colors. -->
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("lp-theme") || "sticker"; } catch (e) {}
+  </script>
+
+  <!-- Fonts: Bricolage Grotesque (chunky headings) + Atkinson Hyperlegible (body text, built for readability). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <!-- Install as an app: Edge/Chrome read the manifest; iPhone uses the apple-* tags. -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.webmanifest') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Launchpad">
+  <meta name="theme-color" content="#FFF6E5">
+</head>
+<body class="page-{{ page }}">
+  <header class="topbar">
+    <a class="logo" href="/">🚀 <span>Launchpad</span></a>
+
+    <nav class="mainnav" aria-label="Main">
+      <a href="/" class="{{ 'active' if page == 'pipeline' }}"><span aria-hidden="true">🗂️</span> Pipeline</a>
+      <a href="/week" class="{{ 'active' if page == 'week' }}"><span aria-hidden="true">📆</span> This Week</a>
+      <a href="/contacts" class="{{ 'active' if page == 'contacts' }}"><span aria-hidden="true">👥</span> Contacts</a>
+      <a href="/questions" class="{{ 'active' if page == 'questions' }}"><span aria-hidden="true">🎤</span> Prep</a>
+      <!-- Less-used pages live under "More" so the phone's bottom bar stays at five buttons. -->
+      <details class="more-menu {{ 'active' if page in ('documents', 'rejections', 'settings', 'matrix', 'stats', 'review', 'shutdown', 'guide', 'discover', 'school') }}">
+        <summary><span aria-hidden="true">☰</span> More</summary>
+        <div class="more-list">
+          <a href="/discover" class="{{ 'active' if page == 'discover' }}">🔭 Discover</a>
+          <a href="/school" class="{{ 'active' if page == 'school' }}">🎓 School (Canvas)</a>
+          <a href="/matrix" class="{{ 'active' if page == 'matrix' }}">🧮 Eisenhower</a>
+          <a href="/stats" class="{{ 'active' if page == 'stats' }}">📊 Stats</a>
+          <a href="/review" class="{{ 'active' if page == 'review' }}">🏋️ Weekly review</a>
+          <a href="/shutdown" class="{{ 'active' if page == 'shutdown' }}">🌙 Shutdown</a>
+          <a href="/documents" class="{{ 'active' if page == 'documents' }}">📄 Documents</a>
+          <a href="/rejections" class="{{ 'active' if page == 'rejections' }}">💔 Rejection log</a>
+          <a href="/settings" class="{{ 'active' if page == 'settings' }}">⚙️ Settings</a>
+          <a href="/guide" class="{{ 'active' if page == 'guide' }}">📖 Guide</a>
+          {% if login_enabled %}
+          <form method="post" action="/logout"><button type="submit" class="logout-btn">🚪 Log out</button></form>
+          {% endif %}
+        </div>
+      </details>
+    </nav>
+
+    <div class="topbar-tools">
+      <div class="bell-wrap">
+        <button type="button" class="btn btn-ghost bell" id="bell-btn" aria-label="Notifications" aria-expanded="false">🔔<span class="bell-count" id="bell-count" hidden></span></button>
+        <div class="bell-panel" id="bell-panel" hidden></div>
+      </div>
+      <details class="add-menu">
+        <summary class="btn btn-primary">＋ Add</summary>
+        <div class="add-menu-list">
+          <button type="button" data-new="opportunity">💼 Opportunity</button>
+          <button type="button" data-new="task">✅ Task</button>
+          <button type="button" data-new="contact">👤 Contact</button>
+        </div>
+      </details>
+      <label class="theme-picker">
+        <span class="sr-only">Theme</span>
+        <select id="theme-select" aria-label="Theme">
+          <option value="sticker">🍦 Sticker</option>
+          <option value="matcha">🍵 Matcha</option>
+          <option value="night">🌙 Night Arcade</option>
+        </select>
+      </label>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Quick add: brain dump or paste a posting. Ctrl+K jumps here. (quickadd.js) -->
+    <section class="quickadd" aria-label="Quick add">
+      <form id="qa-form" class="quickadd-form">
+        <div class="qa-modes">
+          <button type="button" class="pill selected" data-qa-mode="dump" aria-pressed="true">🧠 Brain dump</button>
+          <button type="button" class="pill" data-qa-mode="posting" aria-pressed="false">📋 Paste a posting</button>
+          <button type="button" class="pill mic-btn" id="qa-mic" aria-pressed="false" title="Talk instead of typing" hidden>🎤 Talk</button>
+          <span class="qa-hint muted"><kbd>Ctrl</kbd>+<kbd>K</kbd> to jump here · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to send</span>
+        </div>
+        <div class="qa-row">
+          <textarea id="qa-text" rows="1" aria-label="Brain dump"></textarea>
+          <button class="btn btn-primary" type="submit" id="qa-submit">✨ Sort it out</button>
+        </div>
+        <input id="qa-url" type="url" placeholder="Posting URL (optional, but it gets saved as the link)" aria-label="Posting URL" hidden>
+        {% if not ai_enabled %}
+        <p class="qa-off">🔌 AI is off. Add your Anthropic API key to <code>.env</code> and restart. <a href="/settings">How?</a></p>
+        {% endif %}
+      </form>
+    </section>
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Side panel for viewing/editing any card (filled in by drawer.js). -->
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+  <aside id="drawer" class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+    <div id="drawer-body"></div>
+  </aside>
+
+  <!-- Pop-up used for questions like "why did this close?" -->
+  <dialog id="modal" class="modal"></dialog>
+
+  <!-- Review pop-up for AI quick-add results (filled in by quickadd.js). -->
+  <dialog id="qa-dialog" class="qa-dialog" aria-label="Review quick add"></dialog>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <!-- Floating focus timer (focus.js). -->
+  <div id="focus-widget" class="focus-widget" role="timer" aria-live="off" hidden></div>
+
+  <!-- Big floating mic: opens the Talk screen (hidden on the Talk screen itself). -->
+  {% if page != 'talk' %}
+  <a href="/talk" class="talk-fab" aria-label="Talk: brain dump by voice" title="Talk">🎤</a>
+  {% endif %}
+
+  <!-- The choice lists from constants.py, so the browser uses the exact same values as the server. -->
+  <script id="lp-constants" type="application/json">{{ constants | tojson }}</script>
+
+  <!-- SortableJS: drag-and-drop that also works with touch on a phone (built-in browser drag-and-drop doesn't). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+  <script src="{{ url_for('static', filename='js/lp.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/quickadd.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bell.js') }}"></script>
+  <!-- canvas-confetti: the confetti burst for an Offer or a weekly goal hit (drawing it by hand is a lot of code). -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+  <script src="{{ url_for('static', filename='js/focus.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

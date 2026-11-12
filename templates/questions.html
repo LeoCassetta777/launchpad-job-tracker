@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Question bank{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Question bank</h1>
+  <p class="page-sub">Every interview question you log, from every opportunity. Write your answers here, improve them over time, and ⭐ your best one. When the same question comes up again, Launchpad fills in your best answer.
+    Each opportunity has its own prep page (open a card → 🎤 Interview prep).</p>
+</div>
+
+<form class="filters" onsubmit="return false">
+  <input type="search" id="b-search" placeholder="🔎 Search questions and answers…" aria-label="Search">
+  <select id="b-tag" aria-label="Filter by tag"><option value="">All tags</option></select>
+  <select id="b-kind" aria-label="Filter by type"><option value="">All types</option></select>
+  <button class="btn" type="button" id="b-add">＋ Practice question</button>
+</form>
+
+<p class="muted" id="b-count"></p>
+<div class="question-list" id="b-list"></div>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/questions.js') }}"></script>{% endblock %}

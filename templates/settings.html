@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<div class="page-head">
+  <h1>Settings</h1>
+  <p class="page-sub">AI, the clipper, and demo data. Secrets live in the <code>.env</code> file on the computer running Launchpad, never in the browser.</p>
+</div>
+
+<div class="settings-grid">
+  <section class="card settings-card settings-wide" id="skills-profile">
+    <h2>🧑 Skills profile</h2>
+    <p class="muted">A plain-text summary of your skills, experience, and what you're looking for. Fit checks read it along with the resume you pick, so include things your resume leaves out (courses, side projects, tools, what you want next).</p>
+    <textarea id="profile-text" rows="10" placeholder="Skills: Python (pandas), SQL, n8n…
+Experience: …
+Looking for: a spring internship in AI security or data, Rochester/Buffalo or remote…
+Can't do: relocate before June…"></textarea>
+    <div class="inline-row wrap">
+      <button class="btn btn-primary" type="button" id="profile-save">💾 Save profile</button>
+      <span class="muted small" id="profile-count"></span>
+    </div>
+  </section>
+
+  <section class="card settings-card settings-wide" id="reminders">
+    <h2>🔔 Reminders: email &amp; phone push</h2>
+    <p class="muted">Checked every 15 minutes while Launchpad is running. Nothing is sent between 10 PM and 7 AM. Each reminder goes out once.</p>
+    <div class="status-row" id="notify-status"></div>
+
+    <form id="reminder-form" class="reminder-form" onsubmit="return false">
+      <div class="form-grid">
+        <label class="field"><span class="field-label">Send from (your Gmail)</span>
+          <input type="email" name="gmail_address" placeholder="you@gmail.com"></label>
+        <label class="field"><span class="field-label">Send to (school inbox)</span>
+          <input type="email" name="notify_email" placeholder="you@golisanoinstitute.org"></label>
+      </div>
+
+      <table class="trigger-table">
+        <thead><tr><th>Reminder</th><th>How</th></tr></thead>
+        <tbody id="trigger-rows"></tbody>
+      </table>
+
+      <div class="form-grid">
+        <label class="field"><span class="field-label">Deadline reminders (days before; 0 = morning of)</span>
+          <input type="text" name="deadline_days" placeholder="7,2,0"></label>
+        <label class="field"><span class="field-label">Nudge when Sent/Waiting has no update for (days)</span>
+          <input type="number" name="followup_after_days" min="1" max="60"></label>
+        <label class="field wide check-field"><input type="checkbox" name="remind_demo">
+          <span>Include demo data in reminders (only for testing; otherwise the fake cards would email you)</span></label>
+      </div>
+      <p class="muted small">Each opportunity can override its deadline reminders in its drawer (Status → Deadline reminders).</p>
+      <div class="inline-row wrap">
+        <button class="btn btn-primary" type="button" id="save-reminders">💾 Save</button>
+        <button class="btn" type="button" data-test="email">✉️ Send test email</button>
+        <button class="btn" type="button" data-test="push">📱 Send test push</button>
+        <button class="btn" type="button" id="run-now">▶️ Run check now</button>
+      </div>
+      <pre class="code" id="run-log" hidden></pre>
+    </form>
+
+    <details>
+      <summary><strong>Set up email (Gmail app password)</strong></summary>
+      <ol>
+        <li>In your <em>personal</em> Gmail account, turn on 2-Step Verification (Google Account → Security). App passwords only work with it on.</li>
+        <li>Open <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener noreferrer">myaccount.google.com/apppasswords</a>, name it “Launchpad”, and click Create.</li>
+        <li>Copy the 16-character password. In <code>.env</code>, paste it after <code>GMAIL_APP_PASSWORD=</code> (spaces are fine), set <code>GMAIL_ADDRESS=</code> to that Gmail, save, and restart Launchpad.</li>
+        <li>In your school Outlook, add your Gmail address to <strong>Safe senders</strong> (Settings → Mail → Junk email) so reminders don't land in Junk. Optionally make a rule for subjects starting with <code>[Launchpad]</code>.</li>
+        <li>Click <strong>Send test email</strong>.</li>
+      </ol>
+      <p class="muted small">If you change your Google password, Google cancels app passwords; make a new one.</p>
+    </details>
+    <details>
+      <summary><strong>Set up phone push (ntfy)</strong></summary>
+      <ol>
+        <li>Install the free <strong>ntfy</strong> app on your phone (App Store / Google Play).</li>
+        <li>In <code>.env</code>, copy the value after <code>NTFY_TOPIC=</code>. It's long and random on purpose: anyone who knows it could read your pushes, so it isn't shown here.</li>
+        <li>In the ntfy app tap <strong>+</strong> (Subscribe to topic), paste it, and keep the server as ntfy.sh.</li>
+        <li>Click <strong>Send test push</strong>.</li>
+      </ol>
+      <p class="muted small">Pushes stay vague (“Deadline in 2 days — open Launchpad”); the details are only in email and here.</p>
+    </details>
+    <p class="muted small">Previews (nothing is sent):
+      <a href="/settings/preview/digest" target="_blank">morning digest</a> ·
+      <a href="/settings/preview/weekly" target="_blank">Sunday plan</a> ·
+      <a href="/settings/preview/reminders" target="_blank">reminders due now</a></p>
+  </section>
+
+  <section class="card settings-card">
+    <h2>🤖 AI</h2>
+    {% if ai_enabled %}
+      <p><span class="sticker urg-chill">✓ On</span></p>
+    {% else %}
+      <p><span class="sticker urg-on_fire">✕ Off: no API key yet</span></p>
+    {% endif %}
+    <dl class="settings-list">
+      <dt>Sorting brain dumps &amp; postings</dt><dd><code>{{ parse_model }}</code></dd>
+      <dt>Fit checks &amp; weekly coach (later phases)</dt><dd><code>{{ smart_model }}</code></dd>
+    </dl>
+    <h3 id="ai-spending">💸 AI spending</h3>
+    <div id="budget-meter" class="budget-meter"></div>
+    <div class="budget-controls">
+      <label class="field"><span class="field-label">Monthly cap ($)</span>
+        <input type="number" id="budget-cap" min="0" max="500" step="0.5"></label>
+      <button class="btn btn-small" type="button" id="budget-save">Save cap</button>
+    </div>
+    <label class="check-field budget-override"><input type="checkbox" id="budget-override">
+      <span id="budget-override-label">Allow AI past the cap for the rest of this month</span></label>
+    <p class="muted small">When you hit the cap, Launchpad asks before each AI request, so you can still run one anyway.
+      These are estimates from Anthropic's published prices; your Anthropic Console billing page has the official total.
+      As a backstop, set a spend limit there too (Billing → Spend limits).</p>
+
+    <details {% if not ai_enabled %}open{% endif %}>
+      <summary><strong>How to add or change the API key</strong></summary>
+      <ol>
+        <li>Open the <code>.env</code> file in the Launchpad folder in VS Code.</li>
+        <li>Paste your key after <code>ANTHROPIC_API_KEY=</code> (no quotes, no spaces).</li>
+        <li>Save, then restart Launchpad (Ctrl+C in its terminal, then <code>python app.py</code>).</li>
+      </ol>
+      <p class="muted small">Keys come from console.anthropic.com → API keys. Model names are in <code>.env</code> too (<code>PARSE_MODEL</code>, <code>SMART_MODEL</code>).</p>
+    </details>
+  </section>
+
+  <section class="card settings-card">
+    <h2>📎 Clipper: “Send to Launchpad”</h2>
+    <p>On any job page, click this favorite and the posting opens in Launchpad, ready to extract. Highlight the posting first to send just that part.</p>
+    <p class="bookmarklet-wrap">
+      <a class="btn btn-primary bookmarklet" href="{{ bookmarklet }}" onclick="event.preventDefault(); toast('Drag me to your favorites bar instead of clicking 🙂');">🚀 Send to Launchpad</a>
+    </p>
+    <h3>Install it in Edge</h3>
+    <ol>
+      <li>Show the favorites bar: <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>B</kbd>.</li>
+      <li>Drag the yellow <strong>🚀 Send to Launchpad</strong> button onto the favorites bar.</li>
+      <li>Try it on a job posting. A new tab opens here with the posting in the box.</li>
+    </ol>
+    <details>
+      <summary>Dragging didn't work?</summary>
+      <ol>
+        <li><button class="btn btn-small" type="button" id="copy-bookmarklet">📋 Copy the bookmarklet</button></li>
+        <li>Right-click the favorites bar → <em>Add page</em> (or <em>Add favorite</em>). Name it “Send to Launchpad” and paste into the URL box.</li>
+      </ol>
+    </details>
+    <p class="muted small">It sends pages to <code>{{ origin }}</code>. If Launchpad's address changes (Phase 6 moves it to the Mac mini), reinstall it from this page.</p>
+    <details>
+      <summary>See the bookmarklet's code</summary>
+      <pre class="code">{{ bookmarklet_source }}</pre>
+    </details>
+  </section>
+
+  <section class="card settings-card">
+    <h2>🧪 Demo data</h2>
+    <p>About 11 made-up opportunities, 12 tasks, and 8 contacts, so every page has something on it. Wiping removes <em>only</em> the demo rows; anything you added stays.</p>
+    <p id="demo-state" class="muted">{{ "Demo data is loaded." if has_demo else "No demo data loaded." }}</p>
+    <div class="inline-row">
+      <button class="btn" type="button" data-demo="load">➕ Load demo data</button>
+      <button class="btn btn-danger" type="button" data-demo="wipe">🧹 Wipe demo data</button>
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document.getElementById("copy-bookmarklet").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(document.querySelector(".bookmarklet").getAttribute("href"));
+      toast("Copied. Paste it as the favorite's URL.");
+    } catch (e) {
+      toast("Couldn't copy. Right-click the yellow button → Copy link instead.", "error");
+    }
+  });
+  /* ---------- Skills profile ---------- */
+  const profileBox = document.getElementById("profile-text");
+  const showCount = () => { document.getElementById("profile-count").textContent = `${profileBox.value.length.toLocaleString()} characters`; };
+  api("GET", "/api/profile").then((p) => { profileBox.value = p.text; showCount(); });
+  profileBox.addEventListener("input", showCount);
+  document.getElementById("profile-save").addEventListener("click", async () => {
+    await api("POST", "/api/profile", { text: profileBox.value });
+    toast("Profile saved ✓");
+  });
+
+  /* ---------- AI spending meter ---------- */
+  const FEATURE_LABELS = { brain_dump: "🧠 Brain dumps", posting: "📋 Postings", fit_check: "🎯 Fit checks",
+                           questions: "❓ Interview questions", coach: "🏋️ Weekly coach",
+                           discover_email: "🔭 Reading alert emails", discover_rank: "🔭 Scoring found postings",
+                           discover_triage: "🔭 Picking roles from career pages", discover_sweep: "🌐 Web sweep", agent: "💬 Agent chat" };
+
+  /** $0.0005 for tiny amounts, $1.23 otherwise. */
+  const money = (v) => (v > 0 && v < 0.01 ? `$${v.toFixed(4)}` : `$${v.toFixed(2)}`);
+
+  function showBudget(b) {
+    const level = b.over_cap ? "over" : b.percent >= 80 ? "full" : "ok";
+    // Wrapped in h("div") so a skipped part (false) is dropped instead of shown as the word "false".
+    document.getElementById("budget-meter").replaceChildren(h("div", { class: "budget-inner" },
+      h("div", { class: "budget-numbers" },
+        h("strong", { class: "budget-spent" }, money(b.spent)),
+        h("span", {}, ` of $${b.cap.toFixed(2)} in ${b.month_label}`),
+        h("span", { class: "muted small" }, ` · ${b.calls} AI call${b.calls === 1 ? "" : "s"} · ${money(b.all_time_spent)} all time`)),
+      h("div", { class: `load load-${level}` }, h("div", { class: "load-bar" }, h("div", { class: "load-fill", style: `width:${b.percent}%` }))),
+      b.over_cap && h("p", { class: "budget-warning" }, b.overridden
+        ? "⚠️ Over the cap, but allowed for the rest of the month."
+        : "⛔ Cap reached. Launchpad asks before each AI request."),
+      b.by_feature.length > 0 && h("table", { class: "budget-table" },
+        h("thead", {}, h("tr", {}, h("th", {}, "This month"), h("th", {}, "Calls"), h("th", {}, "Tokens in / out"), h("th", {}, "Cost"))),
+        h("tbody", {}, b.by_feature.map((f) => h("tr", {},
+          h("td", {}, FEATURE_LABELS[f.feature] || f.feature, h("span", { class: "muted small" }, ` (${f.model})`)),
+          h("td", {}, f.calls),
+          h("td", {}, `${f.input_tokens.toLocaleString()} / ${f.output_tokens.toLocaleString()}`),
+          h("td", {}, money(f.cost))))))));
+    document.getElementById("budget-cap").value = b.cap.toFixed(2);
+    document.getElementById("budget-override").checked = b.overridden;
+    document.getElementById("budget-override-label").textContent = `Allow AI past the cap for the rest of ${b.month_label.split(" ")[0]}`;
+  }
+
+  async function loadBudget() { showBudget(await api("GET", "/api/ai/budget")); }
+
+  document.getElementById("budget-save").addEventListener("click", async () => {
+    showBudget(await api("POST", "/api/ai/budget", { monthly_cap: document.getElementById("budget-cap").value }));
+    toast("Cap saved ✓");
+  });
+  document.getElementById("budget-override").addEventListener("change", async (e) => {
+    showBudget(await api("POST", "/api/ai/budget", { override_this_month: e.target.checked }));
+    toast(e.target.checked ? "AI allowed past the cap until the month ends" : "Cap enforced again");
+  });
+  loadBudget();
+
+  /* ---------- Reminders section ---------- */
+  const rform = document.getElementById("reminder-form");
+
+  function showStatus(status) {
+    const pill = (ok, yes, no) => h("span", { class: `sticker small ${ok ? "urg-chill" : "urg-pressing"}` }, ok ? `✓ ${yes}` : `✕ ${no}`);
+    document.getElementById("notify-status").replaceChildren(
+      pill(status.email_ready, "Email ready", status.app_password_set ? "Email: add addresses" : "Email: no app password yet"),
+      pill(status.push_ready, "Push ready", "Push: no topic"),
+      h("span", { class: "muted small" }, `Links in reminders point to ${status.base_url}`));
+  }
+
+  async function loadReminderSettings() {
+    const data = await api("GET", "/api/reminder-settings");
+    rform.elements.gmail_address.value = data.status.gmail_address || "";
+    rform.elements.notify_email.value = data.status.notify_email || "";
+    rform.elements.deadline_days.value = data.settings.deadline_days;
+    rform.elements.followup_after_days.value = data.settings.followup_after_days;
+    rform.elements.remind_demo.checked = data.settings.remind_demo === "1";
+    const labels = { email: "✉️ Email", push: "📱 Push", both: "✉️ + 📱 Both", off: "🚫 Off" };
+    document.getElementById("trigger-rows").replaceChildren(...data.triggers.map((t) =>
+      h("tr", {}, h("td", {}, t.label),
+        h("td", {}, h("select", { name: `channel.${t.key}`, "aria-label": t.label },
+          data.channels.map((c) => h("option", { value: c, selected: data.settings[`channel.${t.key}`] === c }, labels[c])))))));
+    showStatus(data.status);
+  }
+
+  document.getElementById("save-reminders").addEventListener("click", async () => {
+    const payload = { remind_demo: rform.elements.remind_demo.checked };
+    for (const el of rform.elements) {
+      if (el.name && el.name !== "remind_demo") payload[el.name] = el.value;
+    }
+    const res = await api("POST", "/api/reminder-settings", payload);
+    showStatus(res.status);
+    toast("Saved ✓");
+  });
+
+  document.querySelectorAll("[data-test]").forEach((btn) => btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    try {
+      const res = await api("POST", `/api/test/${btn.dataset.test}`, {});
+      toast(res.message);
+    } finally { btn.disabled = false; }
+  }));
+
+  document.getElementById("run-now").addEventListener("click", async () => {
+    const res = await api("POST", "/api/reminders/run", {});
+    const logEl = document.getElementById("run-log");
+    logEl.textContent = res.log.join("\n");
+    logEl.hidden = false;
+    loadBell();
+  });
+
+  loadReminderSettings();
+
+  document.querySelectorAll("[data-demo]").forEach((btn) => btn.addEventListener("click", async () => {
+    const action = btn.dataset.demo;
+    if (action === "wipe" && !confirm("Remove all demo rows? Your own data stays.")) return;
+    const res = await api("POST", "/api/demo", { action });
+    document.getElementById("demo-state").textContent = res.has_demo ? "Demo data is loaded." : "No demo data loaded.";
+    toast(action === "wipe" ? "Demo data wiped 🧹" : "Demo data loaded ➕");
+  }));
+</script>
+{% endblock %}
